@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Daniel</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --crema:#fdf8f2; --terracota:#c66b4e; --dorado:#c9a35b;
+    --tinta:#3d3230; --suave:#8a7a70;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Poppins',sans-serif; color:var(--tinta);
+    background:linear-gradient(160deg,#fdf8f2 0%,#f7e9dd 55%,#f3dccb 100%);
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:28px 18px; line-height:1.7;
+  }
+  .hoja{
+    max-width:620px; width:100%; background:#fffdfa; border-radius:22px;
+    padding:38px 30px; box-shadow:0 18px 45px rgba(140,95,70,.16);
+    border:1px solid #f0e2d5; position:relative; overflow:hidden;
+  }
+  h1,h2,h3{font-family:'Playfair Display',serif; font-weight:600;}
+  /* Portada / sobre */
+  #portada{text-align:center; padding:34px 0 18px;}
+  .sobre{
+    width:190px; height:130px; margin:0 auto 26px; position:relative;
+    background:linear-gradient(145deg,#e9c4a6,#d79f78); border-radius:10px;
+    box-shadow:0 10px 26px rgba(150,100,70,.28); cursor:pointer;
+    transition:transform .5s ease;
+  }
+  .sobre::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:0;
+    border-left:95px solid transparent; border-right:95px solid transparent;
+    border-top:68px solid #d1916a; border-radius:10px 10px 0 0;
+    transform-origin:top; transition:transform .6s ease;
+  }
+  .sobre.abierto::before{transform:rotateX(180deg);}
+  .sobre.abierto{transform:translateY(-4px) scale(1.03);}
+  .corazon-sello{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:34px; z-index:2; transition:opacity .4s;
+  }
+  .sobre.abierto .corazon-sello{opacity:0;}
+  h1{font-size:2rem; margin-bottom:10px; color:var(--terracota);}
+  .sub{color:var(--suave); font-size:.95rem; margin-bottom:22px;}
+  button{
+    font-family:'Poppins',sans-serif; font-size:1rem; cursor:pointer;
+    background:var(--terracota); color:#fff; border:none; border-radius:999px;
+    padding:12px 30px; box-shadow:0 8px 20px rgba(198,107,78,.32);
+    transition:transform .2s, box-shadow .2s;
+  }
+  button:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(198,107,78,.4);}
+  button.sec{background:#fff; color:var(--terracota); border:1.5px solid var(--terracota); box-shadow:none;}
+  /* Contenido */
+  .oculto{display:none;}
+  .fade{animation:aparece .9s ease both;}
+  @keyframes aparece{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
+  .carta p{margin-bottom:16px; font-size:.98rem;}
+  .firma{font-family:'Playfair Display',serif; font-style:italic; font-size:1.15rem; color:var(--terracota); margin-top:14px;}
+  .divisor{text-align:center; color:var(--dorado); margin:26px 0; letter-spacing:8px;}
+  /* Contador */
+  #contador{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:14px;}
+  .caja{background:#fbf1e9; border-radius:14px; padding:14px 6px; text-align:center; border:1px solid #f2e2d4;}
+  .caja span{display:block; font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--terracota);}
+  .caja small{font-size:.68rem; letter-spacing:1px; color:var(--suave); text-transform:uppercase;}
+  /* Motivos */
+  .motivos-lista{list-style:none; margin-top:14px;}
+  .motivos-lista li{
+    background:#fbf1e9; border-left:4px solid var(--dorado); border-radius:10px;
+    padding:11px 16px; margin-bottom:10px; font-size:.92rem; opacity:0;
+    transform:translateX(-10px); transition:opacity .5s, transform .5s;
+  }
+  .motivos-lista li.visible{opacity:1; transform:none;}
+  /* Corazones */
+  #zona-corazones{
+    text-align:center; font-size:30px; letter-spacing:6px; margin:16px 0 6px;
+    user-select:none;
+  }
+  #zona-corazones span{cursor:pointer; transition:transform .2s; display:inline-block;}
+  #zona-corazones span:hover{transform:scale(1.25);}
+  #zona-corazones span.hecho{opacity:.45; filter:grayscale(.4);}
+  #pista{text-align:center; font-size:.85rem; color:var(--suave);}
+  #sorpresa-final{
+    margin-top:18px; text-align:center; background:linear-gradient(135deg,#fbf1e9,#f6e2d2);
+    border:1px dashed var(--dorado); border-radius:16px; padding:22px;
+  }
+  #sorpresa-final h3{color:var(--terracota); margin-bottom:8px;}
+  .code{
+    font-family:ui-monospace,Menlo,monospace; font-size:.82rem; background:#2f2a28;
+    color:#f6d9b8; padding:12px 14px; border-radius:10px; text-align:left;
+    margin-top:12px; overflow-x:auto;
+  }
+  footer{text-align:center; font-size:.72rem; color:var(--suave); margin-top:26px;}
+  @media (max-width:480px){
+    .hoja{padding:28px 20px;} h1{font-size:1.6rem;}
+    #contador{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+<div class="hoja">
+
+  <!-- PORTADA -->
+  <section id="portada">
+    <div class="sobre" id="sobre"><div class="corazon-sello">💌</div></div>
+    <h1>Para Daniel Navarro Machin</h1>
+    <p class="sub">Hay algo que escribí solo para ti…</p>
+    <button id="btn-abrir">Abrir mi carta</button>
+  </section>
+
+  <!-- CONTENIDO -->
+  <main id="contenido" class="oculto">
+
+    <section class="carta fade">
+      <h2 style="color:var(--terracota); margin-bottom:14px;">Mi amor:</h2>
+      <p>Hoy hace <strong>4 años</strong> que nos conocimos, aquel 22 de noviembre de 2022, y desde entonces no ha habido un día en el que no me alegre de haberte encontrado. Eres mi persona favorita, mi compañero de risas, mi lugar seguro.</p>
+      <p>Gracias por tu paciencia infinita, por tus abrazos que arreglan todo y por esas pequeñas cosas que haces y crees que nadie nota (spoiler: yo las noto todas).</p>
+      <p>Te quise escribir algo a tu manera… así que lo hice en código. Espero que el mensaje llegue igual de fuerte que si te lo dijera al oído.</p>
+      <p>Feliz aniversario, mi programador favorito. Te elijo hoy, mañana y en cada versión futura de nosotros.</p>
+      <p class="firma">Te quiero,<br>tu esposa 💛</p>
+      <!-- CAMBIA ESTO si quieres firmar con tu nombre: -->
+      <!-- <p class="firma">Te quiero,<br>TU NOMBRE</p> -->
+    </section>
+
+    <div class="divisor">✦ ✦ ✦</div>
+
+    <section class="fade">
+      <h3 style="color:var(--terracota);">Desde aquel 22/11/2022…</h3>
+      <div id="contador">
+        <div class="caja"><span id="d">0</span><small>días</small></div>
+        <div class="caja"><span id="h">0</span><small>horas</small></div>
+        <div class="caja"><span id="m">0</span><small>min</small></div>
+        <div class="caja"><span id="s">0</span><small>seg</small></div>
+      </div>
+    </section>
+
+    <div class="divisor">✦ ✦ ✦</div>
+
+    <section class="fade">
+      <h3 style="color:var(--terracota);">Motivos por los que te quiero</h3>
+      <ul class="motivos-lista" id="motivos">
+        <li>Porque tus abrazos son mi reset favorito.</li>
+        <li>Porque me haces reír incluso en el tráfico.</li>
+        <li>Porque tienes la paciencia de un buen algoritmo.</li>
+        <li>Porque haces que lo cotidiano se vuelva especial.</li>
+        <li>Porque tu "te quiero" sigue sonando a primera vez.</li>
+        <!-- CAMBIA ESTO: agrega o edita tus propios motivos -->
+        <li>Porque eres hogar, no destino.</li>
+      </ul>
+      <div style="text-align:center; margin-top:14px;">
+        <button class="sec" id="btn-motivos">Muéstrame otro 💫</button>
+      </div>
+    </section>
+
+    <div class="divisor">✦ ✦ ✦</div>
+
+    <section class="fade">
+      <h3 style="color:var(--terracota);">Nuestro pequeño secreto</h3>
+      <p id="pista">Toca los 5 corazones para desbloquear la sorpresa…</p>
+      <div id="zona-corazones">
+        <span>🤍</span><span>🤍</span><span>🤍</span><span>🤍</span><span>🤍</span>
+      </div>
+      <div id="sorpresa-final" class="oculto">
+        <h3>¡Lo lograste! 🎉</h3>
+        <p>Aquí va tu sorpresa final: cambia este texto por el mensaje especial, la reserva de una cena o un código que lo lleve a algo.</p>
+        <div class="code">console.log("Te quiero desde el 22/11/2022 y para siempre ❤️");</div>
+      </div>
+    </section>
+
+    <footer>Hecho con muchísimo amor (y algo de HTML) para Daniel 🧡</footer>
+  </main>
+</div>
+
+<script>
+  /* ---------- Abrir el sobre ---------- */
+  const sobre = document.getElementById('sobre');
+  const portada = document.getElementById('portada');
+  const contenido = document.getElementById('contenido');
+  document.getElementById('btn-abrir').addEventListener('click', () => {
+    sobre.classList.add('abierto');
+    setTimeout(() => {
+      portada.classList.add('oculto');
+      contenido.classList.remove('oculto');
+      contenido.classList.add('fade');
+      document.body.scrollTop = 0;
+    }, 650);
+  });
+
+  /* ---------- Contador desde 22/11/2022 ---------- */
+  const INICIO = new Date(2022, 10, 22, 0, 0, 0); // ← CAMBIA ESTO (año, mes-1, día, hora, min, seg)
+  function tick(){
+    const ahora = new Date();
+    let diff = Math.max(0, ahora - INICIO);
+    const dias = Math.floor(diff / 86400000);
+    const horas = Math.floor(diff / 3600000) % 24;
+    const mins = Math.floor(diff / 60000) % 60;
+    const segs = Math.floor(diff / 1000) % 60;
+    document.getElementById('d').textContent = dias;
+    document.getElementById('h').textContent = horas;
+    document.getElementById('m').textContent = mins;
+    document.getElementById('s').textContent = segs;
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---------- Motivos que aparecen poco a poco ---------- */
+  const motivos = document.querySelectorAll('#motivos li');
+  let mostrados = 0;
+  function mostrarSiguiente(){
+    if (mostrados < motivos.length){
+      motivos[mostrados].classList.add('visible');
+      mostrados++;
+    } else {
+      motivos.forEach(m => m.classList.remove('visible'));
+      mostrados = 0;
+      setTimeout(() => {
+        motivos[0].classList.add('visible');
+        mostrados = 1;
+      }, 400);
+    }
+  }
+  document.getElementById('btn-motivos').addEventListener('click', mostrarSiguiente);
+
+  /* ---------- Corazones que desbloquean la sorpresa ---------- */
+  const corazones = document.querySelectorAll('#zona-corazones span');
+  let tocados = 0;
+  corazones.forEach((c, i) => {
+    c.addEventListener('click', () => {
+      if (c.classList.contains('hecho')) return;
+      c.classList.add('hecho');
+      c.textContent = '❤️';
+      tocados++;
+      if (tocados === corazones.length){
+        document.getElementById('sorpresa-final').classList.remove('oculto');
+        document.getElementById('sorpresa-final').classList.add('fade');
+        document.getElementById('pista').textContent = '¡Sorpresa desbloqueada! 🥰';
+      }
+    });
+  });
+</script>
+</body>
+  </html>
